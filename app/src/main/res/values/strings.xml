@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="app_intro">Welcome</string>
+    <string name="action_settings">Settings</string>
+
+    //web menu
+    <string name="action_back">Back</string>
+    <string name="action_forward">Forward</string>
+    <string name="action_bookmark">Bookmark</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="one">Fragment example</string>
+
+    <string name="card_content">The Present Truth is an application that has been designed and crafted to prepare a people for the second coming of Christ. We are happy to share with others our faith and beliefs.</string>
+</resources>
