@@ -2,16 +2,16 @@ package com.example.jeffreynyauke.myapplication.models;
 
 
 
-public class Post_Article {
+public class Post {
 
     private int type;
-    private String  id, author, title, text, image, timeStamp, url;
+    private String  id, title, author, text, image, timeStamp, url;
 
-    public Post_Article() {
+    public Post() {
     }
 
-    public Post_Article(String id, String title, String author, String image, String text,
-                        String timeStamp, String url, int type) {
+    public Post(String id, String title, String author, String image, String text,
+                String timeStamp, String url, int type) {
         super();
         this.id = id;
         this.title = title;

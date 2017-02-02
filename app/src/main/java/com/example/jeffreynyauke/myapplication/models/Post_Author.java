@@ -5,16 +5,17 @@ package com.example.jeffreynyauke.myapplication.models;
 public class Post_Author {
 
     private int type;
-    private String  id, name, text, image, timeStamp, url;
+    private String  id, title, author, text, image, timeStamp, url;
 
     public Post_Author() {
     }
 
-    public Post_Author(String id, String name, String image, String text,
+    public Post_Author(String id, String title, String author, String image, String text,
                        String timeStamp, String url, int type) {
         super();
         this.id = id;
-        this.name = name;
+        this.title = title;
+        this.author = author;
         this.image = image;
         this.text = text;
         this.timeStamp = timeStamp;
@@ -37,12 +38,19 @@ public class Post_Author {
         this.type = type;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getImage() {

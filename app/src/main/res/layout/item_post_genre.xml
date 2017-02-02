@@ -15,33 +15,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:id="@+id/image"
-                android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="true"
-                android:visibility="visible"
-                android:importantForAccessibility="yes"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/guideline_half"
-                android:paddingTop="@dimen/guideline_margin"
                 android:layout_alignParentLeft="true"
-                android:layout_below="@+id/image"
+                android:layout_below="@+id/genre"
                 android:text="@string/lorem_ipsum_title"
                 android:textStyle="normal"
                 android:textSize="@dimen/text_size_title"
                 android:maxLines="3"
+                android:layout_toLeftOf="@id/image"
                 android:textColor="@color/textColorPrimaryDark"
-
                 android:ellipsize="end"/>
 
             <TextView
@@ -54,6 +40,7 @@
                 android:ellipsize="end"
                 android:paddingLeft="@dimen/guideline_half"
                 android:paddingTop="@dimen/guideline_quarter"
+                android:layout_toLeftOf="@id/image"
                 android:text="@string/lorem_ipsum_text"
                 />
 
@@ -94,9 +81,32 @@
 
             </RelativeLayout>
 
+            <ImageView
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:id="@+id/image"
+                android:layout_width="@dimen/image_post_author"
+                android:adjustViewBounds="true"
+                android:layout_height="@dimen/image_post_author"
+                android:layout_marginRight="@dimen/guideline_margin"
+                android:layout_marginLeft="@dimen/guideline_half"
+                android:layout_below="@+id/genre"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:text="@string/lorem_ipsum_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/guideline_margin"
+                android:paddingLeft="@dimen/guideline_half"
+                android:textAllCaps="true"
+                android:textColor="@color/textColorPrimary"
+                android:id="@+id/genre"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
 </FrameLayout>
-
-

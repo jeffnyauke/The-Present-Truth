@@ -22,7 +22,7 @@ public class AboutActivity extends AbsAboutActivity {
 
     @SuppressLint("SetTextI18n") @Override
     protected void onCreateHeader(ImageView icon, TextView slogan, TextView version) {
-        setHeaderContentColor(getResources().getColor(R.color.textColorPrimary));
+        setHeaderContentColor(getResources().getColor(R.color.textColorPrimaryDark));
         setNavigationIcon(R.drawable.ic_close_black_24dp);
         icon.setImageResource(R.mipmap.ic_launcher);
         slogan.setText("The Present Truth");

@@ -3,11 +3,27 @@
     <string name="app_intro">Welcome</string>
     <string name="action_settings">Settings</string>
 
-    //web menu
+    <!--web menu-->
     <string name="action_back">Back</string>
     <string name="action_forward">Forward</string>
     <string name="action_bookmark">Bookmark</string>
     <string name="title_activity_main">MainActivity</string>
+
+    <string name="title_post">Title</string>
+    <string name="text_post">Text</string>
+    <string name="author_post">Author</string>
+    <string name="url_post">URL</string>
+    <string name="timestamp_post">Timestamp</string>
+    <string name="type_post">Type</string>
+    <string name="image_post">Image</string>
+    <string name="button_send">Send</string>
+
+    <!--Lorem Ipsum-->
+    <string name="lorem_ipsum_title">Lorem Ipsum Dor Sammet Mondulat Bader Thor Man Tabil Laquim Tader Man Tudor Laquiaserm </string>
+    <string name="lorem_ipsum_text">Lorem ipsum dor sammet mondulat bader thor man tabil laquim tader man tudor laquiaserm turdem dor minute teladere well der mundonert henr ken tammub biro ka welcomi hasera jefater tumeraset refida wllfare feola ferta sattad firafter henz mokeira.</string>
+    <string name="lorem_ipsum_name">Jeffrey Nyauke</string>
+    <string name="lorem_ipsum_genre">Prophecy</string>
+    <string name="lorem_ipsum_time">10 minutes ago</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

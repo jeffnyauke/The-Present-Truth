@@ -30,7 +30,6 @@
         <activity
             android:name=".PostDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".AboutActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -44,6 +43,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".PostActivity"></activity>
     </application>
 
 </manifest>
