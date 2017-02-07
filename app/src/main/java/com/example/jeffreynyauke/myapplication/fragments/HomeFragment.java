@@ -2,6 +2,8 @@ package com.example.jeffreynyauke.myapplication.fragments;
 
 
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -86,9 +88,11 @@ public class HomeFragment extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 //for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+                Log.e("Firebase",dataSnapshot.toString());
 
                 Post post = dataSnapshot.getValue(Post.class);
                 postAdapter.refillAdapter(post);
+                Log.e("Firebase","onChildAdded");
             }
 
             @Override
@@ -119,6 +123,35 @@ public class HomeFragment extends Fragment {
     @Override public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+
+    /**
+     * Saving current games loaded to restore them if the view lifecycle is restarted
+     * @param outState with current games loaded parcel
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        List<Post> currentPosts = postAdapter.getCurrentPosts();
+
+        //Parcelable currentPostsParcel = Parcels.wrap(currentGames);
+        //outState.putParcelable(EXTRA_CURRENT_GAMES_LOADED, currentPostsParcel);
+    }
+
+    /**
+     * Trying to restore games stored when lifecycle got stopped
+     * @param savedInstanceState
+     */
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            /*Parcelable safeGamesLoadedParcel = savedInstanceState.getParcelable(EXTRA_CURRENT_GAMES_LOADED);
+            List<Game> safeGamesLoaded = Parcels.unwrap(safeGamesLoadedParcel);
+            gameListPresenter.updateViewWithSafeGames(safeGamesLoaded);*/
+        }
     }
 
 

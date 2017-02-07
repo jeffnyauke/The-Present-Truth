@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = ButterKnife.findById(this, R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         viewPager = ButterKnife.findById(this, R.id.viewpager);
         setupViewPager(viewPager);
 

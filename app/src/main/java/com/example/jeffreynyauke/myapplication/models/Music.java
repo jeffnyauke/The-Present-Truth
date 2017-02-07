@@ -5,19 +5,20 @@ package com.example.jeffreynyauke.myapplication.models;
 public class Music {
 
     private int type;
-    private String  id, title, author, text, image, timeStamp, url;
+    private boolean isDownloaded;
+    private String  id, title, author, image, timeStamp, url;
 
     public Music() {
     }
 
-    public Music(String id, String title, String author, String image, String text,
+    public Music(String id, String title, String author, String image, boolean isDownloaded,
                  String timeStamp, String url, int type) {
         super();
         this.id = id;
         this.title = title;
         this.author = author;
         this.image = image;
-        this.text = text;
+        this.isDownloaded = isDownloaded;
         this.timeStamp = timeStamp;
         this.url = url;
         this.type = type;
@@ -61,12 +62,12 @@ public class Music {
         this.image = image;
     }
 
-    public String getText() {
-        return text;
+    public boolean getIsDownloaded() {
+        return isDownloaded;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setIsDownloaded(boolean isDownloaded) {
+        this.isDownloaded = isDownloaded;
     }
 
     public String getTimeStamp() {

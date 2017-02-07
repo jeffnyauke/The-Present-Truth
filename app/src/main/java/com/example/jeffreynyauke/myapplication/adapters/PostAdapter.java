@@ -130,6 +130,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         viewHolderAuthor.getTextTextView().setText(post.getText());
         viewHolderAuthor.getTimestampTextView().setText(post.getTimeStamp());
         viewHolderAuthor.getAuthorTextView().setText(post.getAuthor());
+        Log.e("Firebase image",post.getImage());
         Glide.with(activity).load(post.getImage())
                 .thumbnail(0.5f)
                 .crossFade()
@@ -169,6 +170,10 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     public void cleanUp() {
         postList.clear();
+    }
+
+    public List<Post> getCurrentPosts() {
+        return postList;
     }
 
 
