@@ -37,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_size_normal"
                 android:maxLines="6"
+                android:layout_alignParentLeft="true"
                 android:ellipsize="end"
                 android:paddingLeft="@dimen/guideline_half"
                 android:paddingTop="@dimen/guideline_quarter"

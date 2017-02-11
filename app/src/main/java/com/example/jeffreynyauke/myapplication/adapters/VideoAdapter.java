@@ -12,9 +12,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.jeffreynyauke.myapplication.R;
-import com.example.jeffreynyauke.myapplication.app.Config;
 import com.example.jeffreynyauke.myapplication.models.Music;
-import com.example.jeffreynyauke.myapplication.models.Post;
+import com.example.jeffreynyauke.myapplication.models.Video;
 
 import java.util.List;
 
@@ -24,19 +23,19 @@ import butterknife.ButterKnife;
 /**
  * Created by Jeffrey Nyauke on 11/7/2015.
  */
-public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class VideoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
-    private List<Music> musicList;
+    private List<Video> videoList;
     private Activity activity;
 
-    public MusicAdapter(Activity activity, List<Music> musicList) {
-        this.musicList=musicList;
+    public VideoAdapter(Activity activity, List<Video> videoList) {
+        this.videoList=videoList;
         this.activity = activity;
     }
 
     @Override
     public int getItemViewType(int position) {
-        return musicList.get(position).getType();
+        return videoList.get(position).getType();
     }
 
     @Override
@@ -44,72 +43,72 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         RecyclerView.ViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
 
-        View viewMusic = inflater.inflate(R.layout.item_music, viewGroup, false);
-        viewHolder= new ViewHolderMusic(viewMusic);
+        View viewVideo = inflater.inflate(R.layout.item_video, viewGroup, false);
+        viewHolder= new ViewHolderVideo(viewVideo);
 
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        ViewHolderMusic viewHolderMusic=(ViewHolderMusic) viewHolder;
-        configureMusicView(viewHolderMusic,position);
+        ViewHolderVideo viewHolderVideo=(ViewHolderVideo) viewHolder;
+        configureVideoView(viewHolderVideo,position);
 
     }
 
-    private void configureMusicView(ViewHolderMusic viewHolderMusic, int position) {
-        Music music=musicList.get(position);
-        viewHolderMusic.getTitleTextView().setText(music.getTitle());
-        viewHolderMusic.getDescriptionTextView().setText(music.getTimeStamp()+" "+music.getSize());
+    private void configureVideoView(ViewHolderVideo viewHolderVideo, int position) {
+        Video video=videoList.get(position);
+        viewHolderVideo.getTitleTextView().setText(video.getTitle());
+        viewHolderVideo.getTimestampTextView().setText(video.getTimeStamp()+", "+video.getSize());
         Glide.with(activity).load(R.drawable.about_page_button_dark)
                 .thumbnail(0.2f)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(viewHolderMusic.getImageView());
+                .into(viewHolderVideo.getImageView());
     }
 
 
 
     @Override
     public int getItemCount() {
-        return musicList.size();
+        return videoList.size();
     }
 
 
-    public void refillAdapter(Music newPost){
+    public void refillAdapter(Video newVideo){
 
         /*add new message chat to list*/
-        musicList.add(newPost);
+        videoList.add(newVideo);
 
         /*refresh view*/
         notifyItemInserted(getItemCount()-1);
     }
 
-    public void refillFirsTimeAdapter(List<Music> newPost){
+    public void refillFirsTimeAdapter(List<Video> newVideo){
 
         /*add new message chat to list*/
-       musicList.clear();
-        musicList.addAll(newPost);
+        videoList.clear();
+        videoList.addAll(newVideo);
         /*refresh view*/
         notifyItemInserted(getItemCount()-1);
     }
 
     public void cleanUp() {
-        musicList.clear();
+        videoList.clear();
     }
 
 
     /*==============ViewHolder===========*/
 
-    /*ViewHolder for Music*/
+    /*ViewHolder for Video*/
 
-    public class ViewHolderMusic extends RecyclerView.ViewHolder {
+    public class ViewHolderVideo extends RecyclerView.ViewHolder {
 
         @BindView(R.id.title) TextView title;
-        @BindView(R.id.description) TextView description;
+        @BindView(R.id.timestamp) TextView timestamp;
         @BindView(R.id.image) ImageView image;
 
-        public ViewHolderMusic(View itemView) {
+        public ViewHolderVideo(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -122,21 +121,22 @@ public class MusicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             title = textView;
         }
 
-        public TextView getDescriptionTextView() {
-            return description;
+        public TextView getTimestampTextView() {
+            return timestamp;
         }
 
-        public void setDescriptionTextView(TextView textView) {
-            description = textView;
+        public void setTimestampTextView(TextView textView) {
+            timestamp = textView;
         }
 
         public ImageView getImageView() {
             return image;
         }
 
-        public void setImageView(ImageView imageView) {
-            image = imageView;
+        public void setImageView(TextView textView) {
+            timestamp = textView;
         }
+
     }
 
 

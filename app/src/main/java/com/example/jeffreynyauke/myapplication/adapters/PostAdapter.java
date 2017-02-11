@@ -106,7 +106,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         viewHolderNews.getTextTextView().setText(post.getText());
         viewHolderNews.getTimestampTextView().setText(post.getTimeStamp());
         Glide.with(activity).load(post.getImage())
-                .thumbnail(0.5f)
+                .thumbnail(0.2f)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(viewHolderNews.getImageView());
@@ -118,7 +118,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         viewHolderArticle.getTextTextView().setText(post.getText());
         viewHolderArticle.getTimestampTextView().setText(post.getTimeStamp());
         Glide.with(activity).load(post.getImage())
-                .thumbnail(0.5f)
+                .thumbnail(0.2f)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(viewHolderArticle.getImageView());
@@ -132,7 +132,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         viewHolderAuthor.getAuthorTextView().setText(post.getAuthor());
         Log.e("Firebase image",post.getImage());
         Glide.with(activity).load(post.getImage())
-                .thumbnail(0.5f)
+                .thumbnail(0.2f)
                 .crossFade()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(viewHolderAuthor.getImageView());

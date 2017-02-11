@@ -40,6 +40,7 @@
                 android:ellipsize="end"
                 android:paddingLeft="@dimen/guideline_half"
                 android:paddingTop="@dimen/guideline_quarter"
+                android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@id/image"
                 android:text="@string/lorem_ipsum_text"
                 />

@@ -2,16 +2,16 @@ package com.example.jeffreynyauke.myapplication.models;
 
 
 
-public class Music {
+public class Video {
 
     private int type;
     private boolean isDownloaded;
     private String  id, title, author, size, timeStamp, url;
 
-    public Music() {
+    public Video() {
     }
 
-    public Music(String id, String title, String author, String size, boolean isDownloaded,
+    public Video(String id, String title, String author, String size, boolean isDownloaded,
                  String timeStamp, String url, int type) {
         super();
         this.id = id;

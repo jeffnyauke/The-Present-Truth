@@ -25,6 +25,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.jeffreynyauke.myapplication.animators.ToolbarAnimator;
+import com.example.jeffreynyauke.myapplication.animators.ToolbarAnimatorImpl;
 import com.example.jeffreynyauke.myapplication.fragments.BooksFragment;
 import com.example.jeffreynyauke.myapplication.fragments.HealthFragment;
 import com.example.jeffreynyauke.myapplication.fragments.HomeFragment;
@@ -86,7 +88,6 @@ public class MainActivity extends AppCompatActivity
 
         Toolbar toolbar = ButterKnife.findById(this, R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         viewPager = ButterKnife.findById(this, R.id.viewpager);
         setupViewPager(viewPager);
