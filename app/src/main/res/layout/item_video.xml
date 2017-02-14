@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="100dp"
     android:layout_height="match_parent">
 
 
@@ -22,17 +22,21 @@
 
         <TextView
             android:text="TextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimaryDark"
+            android:maxLines="2"
+            android:lines="2"
+            android:ellipsize="end"
+            android:textColor="@color/textColorPrimaryDark"
             android:id="@+id/title" />
 
         <TextView
             android:text="TextView"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/guideline_quarter_half"
-            android:textColor="@color/colorPrimary"
+            android:ellipsize="end"
+            android:textColor="@color/textColorPrimary"
             android:textSize="@dimen/text_size_small"
             android:id="@+id/timestamp" />
 

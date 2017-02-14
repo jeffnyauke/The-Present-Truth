@@ -7,5 +7,6 @@
     <color name="navigationBarColor">#000000</color>
     <color name="textColorPrimary">#333</color>
     <color name="textColorPrimaryDark">#292F33</color>
+    <color name="grey_background">#bbbbbb</color>
 
 </resources>

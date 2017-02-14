@@ -108,6 +108,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         Glide.with(activity).load(post.getImage())
                 .thumbnail(0.2f)
                 .crossFade()
+                .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(viewHolderNews.getImageView());
     }
@@ -120,6 +121,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         Glide.with(activity).load(post.getImage())
                 .thumbnail(0.2f)
                 .crossFade()
+                .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(viewHolderArticle.getImageView());
     }
@@ -134,6 +136,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         Glide.with(activity).load(post.getImage())
                 .thumbnail(0.2f)
                 .crossFade()
+                .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(viewHolderAuthor.getImageView());
     }
