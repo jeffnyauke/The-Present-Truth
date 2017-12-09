@@ -1,12 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#4527A0</color>
+    <color name="colorPrimaryDark">#311B92</color>
+    <color name="colorPrimaryLight">#D1C4E9</color>
+    <color name="colorAccent">#ff8a65</color><!--FF4081  #FF5722-->
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
     <color name="textColorPrimary">#333</color>
-    <color name="textColorPrimaryDark">#292F33</color>
+    <color name="textColorSecondary">#666666</color>
+    <color name="textColorPrimaryDark">#292929</color>
+    <color name="textColorPrimaryDark2">#292F33</color>
     <color name="grey_background">#bbbbbb</color>
+    <color name="divider">#bdbdbd</color>
+
+    <color name="primary">#3F51B5</color>
+    <color name="primary_dark">#303F9F</color>
+    <color name="primary_light">#C5CAE9</color>
+
+    <color name="accent">#9E9E9E</color>
+
+    <color name="color_window_background">#ffffff</color>
+    <color name="color_window_background_night">#303030</color>
+    <color name="color_disable">#4cffff</color>
+    <color name="color_text_primary_dark">#303030</color>
+    <color name="color_text_primary_light">#CECECE</color>
+    <color name="color_text_background_day">#F6F6F6</color>
+    <color name="color_text_background_night">#2B2B2B</color>
+    <color name="color_division">#C7C7C7</color>
+
+    <color name="translucent_white">#88ffffff</color>
+    <color name="black_effective">#2a2a2a</color>
+    <color name="light_gray">#dbdbdb</color>
+    <color name="gray">#7e7e7e</color>
+    <color name="list_divider">#dedede</color>
+    <color name="semi_gray">#979797</color>
+    <color name="dark_gray">#696969</color>
+    <color name="bg_color">#f7f7f7</color>
+
+    <color name="ripple_material_light">#1f000000</color>
+    <color name="ripple_material_dark">#33ffffff</color>
 
 </resources>

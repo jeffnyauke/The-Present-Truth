@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:240495102989:android:23d81548046ef315",
+        "mobilesdk_app_id": "1:240495102989:android:b801911f7af4cad2",
         "android_client_info": {
-          "package_name": "creativeage.presenttruth"
+          "package_name": "com.example.jeffreynyauke.myapplication"
         }
       },
       "oauth_client": [
         {
-          "client_id": "240495102989-7k2j5ofkf6j8l7o13cgh98a3jgbvif1v.apps.googleusercontent.com",
+          "client_id": "240495102989-n9a7l6tq39ovucs5jtil9i11m595r334.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "creativeage.presenttruth",
-            "certificate_hash": "ACF270FDF5234756D329A85DB2EF7FB4A682712E"
+            "package_name": "com.example.jeffreynyauke.myapplication",
+            "certificate_hash": "32105477075fdb2ecce3751437583c1709f2e244"
           }
         },
         {
@@ -52,18 +52,62 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:240495102989:android:b801911f7af4cad2",
+        "mobilesdk_app_id": "1:240495102989:android:d463e8de6734c418",
         "android_client_info": {
-          "package_name": "com.example.jeffreynyauke.myapplication"
+          "package_name": "com.jeffreynyauke.presenttruth.admin"
         }
       },
       "oauth_client": [
         {
-          "client_id": "240495102989-n9a7l6tq39ovucs5jtil9i11m595r334.apps.googleusercontent.com",
+          "client_id": "240495102989-lgtmgp5259rcg9qa6poqte7tv83jts1s.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.jeffreynyauke.myapplication",
-            "certificate_hash": "32105477075FDB2ECCE3751437583C1709F2E244"
+            "package_name": "com.jeffreynyauke.presenttruth.admin",
+            "certificate_hash": "32105477075fdb2ecce3751437583c1709f2e244"
+          }
+        },
+        {
+          "client_id": "240495102989-ej6d7aka8opnpsu3vcqtj9ds8bce0gmg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYVuSlzqK2_0QgrH07d6Upl-S2Gl4Ci9o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "240495102989-ej6d7aka8opnpsu3vcqtj9ds8bce0gmg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:240495102989:android:b5f60a4206fade26",
+        "android_client_info": {
+          "package_name": "com.piestack.adventelegraph"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "240495102989-arutjqbsvkvdt06gmgm1id1ffbm4ifie.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.piestack.adventelegraph",
+            "certificate_hash": "32105477075fdb2ecce3751437583c1709f2e244"
           }
         },
         {

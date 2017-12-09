@@ -1,41 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.jeffreynyauke.myapplication">
+    package="com.piestack.adventelegraph">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
+        android:name="com.piestack.adventelegraph.app.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/app_name_short"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".IntroActivity"
+            android:name="com.piestack.adventelegraph.ui.IntroActivity"
             android:label="@string/app_intro"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".BrowserActivity"
+            android:name="com.piestack.adventelegraph.ui.BrowserActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name=".services.FloatingViewService"
+            android:name="com.piestack.adventelegraph.services.FloatingViewService"
             android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name="com.piestack.adventelegraph.services.MyUploadService"
+            android:exported="false" />
+        <service
+            android:name="com.piestack.adventelegraph.services.MyDownloadService"
             android:exported="false" />
 
         <activity
-            android:name=".PostDetailActivity"
+            android:name="com.piestack.adventelegraph.ui.PostDetailActivity"
+            android:parentActivityName="com.piestack.adventelegraph.ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
+        <!--<activity
             android:name=".AboutActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" />-->
         <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main"
+            android:name="com.piestack.adventelegraph.ui.SettingsPrefActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity android:name="id.agusibrahim.yuuplayer.YuuPlayerFullscreen" />
+        <activity
+            android:name="com.piestack.adventelegraph.ui.MainActivity"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,7 +57,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PostActivity"></activity>
+        <activity android:name="com.piestack.adventelegraph.ui.PostActivity" />
+        <activity
+            android:name="com.piestack.adventelegraph.ui.QuizActivity"
+            android:parentActivityName="com.piestack.adventelegraph.ui.MainActivity"
+            android:theme="@style/AppTheme.NoActionBarQuiz" />
     </application>
 
 </manifest>

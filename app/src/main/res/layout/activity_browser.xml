@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:fitsSystemWindows="true"
-    tools:context=".BrowserActivity">
+    tools:context="com.piestack.adventelegraph.ui.BrowserActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
