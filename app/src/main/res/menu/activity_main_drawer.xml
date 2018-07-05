@@ -4,42 +4,47 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:title="HOME" />
+            android:title="@string/home" />
         <!--<item
             android:id="@+id/nav_prophecy"
             android:title="Prophecy" />-->
         <item
             android:id="@+id/nav_poems"
-            android:title="POEMS" />
+            android:title="@string/poems" />
         <item
             android:id="@+id/nav_health"
-            android:title="HEALTH" />
+            android:title="@string/health" />
         <item
             android:id="@+id/nav_library"
-            android:title="LIBRARY" />
+            android:title="@string/library" />
         <item
             android:id="@+id/nav_music"
-            android:title="MUSIC" />
+            android:title="@string/music" />
         <item
             android:id="@+id/nav_video"
-            android:title="VIDEO" />
+            android:title="@string/video" />
 
     </group>
 
-    <item android:title="More">
+    <item android:title="@string/more">
         <menu>
+            <item
+                android:id="@+id/nav_bible"
+                android:icon="@drawable/ic_bible"
+                android:title="@string/bible" />
+            <item
+                android:id="@+id/nav_hymnal"
+                android:icon="@drawable/ic_concert"
+                android:title="@string/hymnal" />
             <item
                 android:id="@+id/nav_quiz"
                 android:icon="@drawable/ic_whatshot_black_24dp"
-                android:title="Quiz" />
+                android:title="@string/quiz" />
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/svg_ic_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_settings"
-                android:icon="@drawable/svg_ic_settings"
-                android:title="Settings" />
+                android:title="@string/share" />
+
             <!--<item
                 android:id="@+id/nav_about"
                 android:icon="@drawable/svg_ic_about"
@@ -47,7 +52,11 @@
             <item
                 android:id="@+id/nav_rate"
                 android:icon="@drawable/svg_ic_evaluation"
-                android:title="Rate Us" />
+                android:title="@string/rate_us" />
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/svg_ic_settings"
+                android:title="@string/settings" />
         </menu>
     </item>
 

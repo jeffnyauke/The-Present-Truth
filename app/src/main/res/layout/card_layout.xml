@@ -14,7 +14,7 @@
   -->
 
 
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_layout"
     android:layout_width="match_parent"
@@ -56,14 +56,12 @@
                 android:orientation="vertical">
 
                 <TextView
-                    style="@style/MediumFontLato"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="✓"
                     android:textSize="36sp" />
 
                 <TextView
-                    style="@style/MediumFontLato"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-6dp"
@@ -119,5 +117,5 @@
             android:layout_margin="5dp"
             android:minHeight="44dp" />
     </LinearLayout>
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>
 

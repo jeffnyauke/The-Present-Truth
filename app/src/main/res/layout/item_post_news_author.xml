@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/guideline_margin"
+    android:layout_marginTop="@dimen/guideline_margin"
     android:background="@color/windowBackground"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -17,36 +17,32 @@
 
             <TextView
                 android:id="@+id/title"
-                style="@style/BoldFontLato"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_below="@+id/author"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:ellipsize="end"
                 android:maxLines="6"
                 android:paddingLeft="@dimen/guideline_margin"
                 android:paddingRight="@dimen/guideline_margin"
                 android:text="@string/lorem_ipsum_title"
-                android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/text_size_title_big"
-                android:textStyle="normal" />
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
             <TextView
                 android:id="@+id/text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_below="@+id/title"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:ellipsize="end"
                 android:maxLines="6"
                 android:paddingLeft="@dimen/guideline_margin"
-                android:paddingRight="@dimen/guideline_margin"
                 android:paddingTop="@dimen/guideline_quarter"
+                android:paddingRight="@dimen/guideline_margin"
                 android:text="@string/lorem_ipsum_text"
-                android:textColor="@color/textColorSecondary"
-                android:textSize="@dimen/text_size_normal" />
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -61,12 +57,12 @@
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/share"
                     android:layout_toStartOf="@+id/share"
-                    android:paddingBottom="@dimen/guideline_space"
+                    android:paddingTop="@dimen/guideline_margin"
                     android:paddingLeft="@dimen/guideline_margin"
                     android:paddingRight="@dimen/guideline_margin"
-                    android:paddingTop="@dimen/guideline_space"
+                    android:paddingBottom="@dimen/guideline_margin"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/ic_bookmark_border_black_24dp" />
+                    app:srcCompat="@drawable/bookmark" />
 
                 <ImageView
                     android:id="@+id/share"
@@ -75,27 +71,26 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:paddingBottom="@dimen/guideline_space"
+                    android:paddingTop="@dimen/guideline_margin"
                     android:paddingEnd="@dimen/guideline_margin"
                     android:paddingLeft="@dimen/guideline_half"
                     android:paddingRight="@dimen/guideline_margin"
                     android:paddingStart="@dimen/guideline_half"
-                    android:paddingTop="@dimen/guideline_space"
+                    android:paddingBottom="@dimen/guideline_margin"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/ic_share_black_24dp" />
+                    app:srcCompat="@drawable/share" />
 
                 <TextView
                     android:id="@+id/timestamp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:paddingLeft="@dimen/guideline_margin"
                     android:paddingStart="@dimen/guideline_margin"
+                    android:paddingLeft="@dimen/guideline_margin"
                     android:text="@string/lorem_ipsum_time"
-                    android:textColor="@color/textColorPrimary"
-                    android:textSize="@dimen/text_size_small" />
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
 
             </RelativeLayout>
 
@@ -103,18 +98,17 @@
                 android:id="@+id/author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:paddingLeft="@dimen/guideline_margin"
                 android:paddingStart="@dimen/guideline_margin"
+                android:paddingLeft="@dimen/guideline_margin"
                 android:paddingTop="@dimen/guideline_margin"
                 android:text="@string/lorem_ipsum_name"
                 android:textAllCaps="true"
-                android:textColor="@color/textColorPrimaryDark2"
-                android:textSize="@dimen/text_size_small" />
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2" />
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 </FrameLayout>
 

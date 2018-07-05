@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/guideline_margin"
+    android:layout_marginTop="@dimen/guideline_margin"
     android:background="@color/windowBackground"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -17,7 +17,7 @@
 
             <TextView
                 android:id="@+id/title"
-                style="@style/MediumFontLato"
+                android:fontFamily="serif"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -32,8 +32,8 @@
                 android:paddingRight="@dimen/guideline_half"
                 android:paddingStart="@dimen/guideline_margin"
                 android:text="@string/lorem_ipsum_title"
-                android:textColor="@color/textColorPrimary"
-                android:textSize="@dimen/text_size_title"
+                android:textColor="@color/textColorPrimaryDark"
+                android:textSize="@dimen/text_size_title_big"
                 android:textStyle="normal" />
 
             <TextView
@@ -49,6 +49,7 @@
                 android:maxLines="6"
                 android:paddingEnd="@dimen/guideline_half"
                 android:paddingLeft="@dimen/guideline_margin"
+                android:fontFamily="sans-serif"
                 android:paddingRight="@dimen/guideline_half"
                 android:paddingStart="@dimen/guideline_margin"
                 android:paddingTop="@dimen/guideline_quarter"
@@ -69,12 +70,14 @@
                     android:layout_centerVertical="true"
                     android:layout_toLeftOf="@+id/share"
                     android:layout_toStartOf="@+id/share"
-                    android:paddingBottom="@dimen/guideline_space"
+                    android:contentDescription="@string/image"
                     android:paddingLeft="@dimen/guideline_margin"
                     android:paddingRight="@dimen/guideline_margin"
-                    android:paddingTop="@dimen/guideline_space"
+                    android:paddingTop="@dimen/guideline_margin"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/ic_bookmark_border_black_24dp" />
+                    android:paddingBottom="@dimen/guideline_margin"
+                    android:visibility="invisible"
+                    app:srcCompat="@drawable/bookmark" />
 
                 <ImageView
                     android:id="@+id/share"
@@ -83,16 +86,20 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:paddingBottom="@dimen/guideline_space"
+                    android:contentDescription="@string/image"
                     android:paddingEnd="@dimen/guideline_margin"
                     android:paddingLeft="@dimen/guideline_half"
                     android:paddingRight="@dimen/guideline_margin"
-                    android:paddingTop="@dimen/guideline_space"
+                    android:paddingStart="@dimen/guideline_half"
                     android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/ic_share_black_24dp" />
+                    android:paddingTop="@dimen/guideline_margin"
+                    android:paddingBottom="@dimen/guideline_margin"
+                    android:visibility="invisible"
+                    app:srcCompat="@drawable/share" />
 
                 <TextView
                     android:id="@+id/timestamp"
+                    android:fontFamily="sans-serif"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -100,7 +107,10 @@
                     android:paddingLeft="@dimen/guideline_margin"
                     android:paddingRight="@dimen/guideline_space"
                     android:text="@string/lorem_ipsum_time"
-                    android:textColor="@color/textColorPrimary"
+                    android:textColor="@color/textColorPrimaryDark2"
+                    android:layout_alignParentStart="true"
+                    android:paddingStart="@dimen/guideline_margin"
+                    android:paddingEnd="@dimen/guideline_space"
                     android:textSize="@dimen/text_size_small" />
 
             </RelativeLayout>
@@ -114,11 +124,14 @@
                 android:layout_below="@+id/author"
                 android:layout_marginRight="@dimen/guideline_margin"
                 android:adjustViewBounds="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_marginEnd="@dimen/guideline_margin"
+                android:background="@color/light_gray_100"
+                android:contentDescription="@string/image"
                 android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/author"
+                android:fontFamily="sans-serif"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -132,6 +145,6 @@
                 android:textSize="@dimen/text_size_small" />
 
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 </FrameLayout>

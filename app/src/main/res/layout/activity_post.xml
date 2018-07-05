@@ -12,10 +12,10 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/title"
+                android:id="@+id/title_post"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -28,9 +28,9 @@
                 android:id="@+id/text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/title"
-                android:layout_alignStart="@+id/title"
-                android:layout_below="@+id/title"
+                android:layout_below="@+id/title_post"
+                android:layout_alignStart="@+id/title_post"
+                android:layout_alignLeft="@+id/title_post"
                 android:ems="10"
                 android:inputType="textMultiLine"
                 android:text="@string/text_post" />

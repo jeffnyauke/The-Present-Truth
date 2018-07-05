@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
 
 
     <FrameLayout
@@ -18,7 +20,8 @@
             android:layout_marginEnd="12dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="12dp"
-            android:background="@drawable/ic_video_library_black_24dp"
+            android:padding="@dimen/guideline_quarter_half"
+            app:srcCompat="@drawable/ic_video_library_black_24dp"
             android:scaleType="centerInside"
             tools:ignore="ContentDescription" />
 
@@ -36,7 +39,6 @@
 
         <TextView
             android:id="@+id/title"
-            style="@style/SemiBoldLato"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -44,10 +46,9 @@
             android:fadingEdge="horizontal"
             android:gravity="bottom"
             android:singleLine="true"
-            android:text="Title"
-            android:textAppearance="@style/Theme.Phonograph.Notification.Title"
-            android:textColor="@color/textColorPrimary"
-            android:textSize="16.5sp"
+            android:text="@string/sample_title"
+            android:textColor="@color/textColorPrimaryDark"
+            android:textSize="@dimen/text_size_normal"
             tools:ignore="NestedWeights" />
 
         <LinearLayout
@@ -60,13 +61,12 @@
 
             <TextView
                 android:id="@+id/timestamp"
-                style="@style/RegularFontLato"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
                 android:ellipsize="marquee"
                 android:fadingEdge="horizontal"
                 android:singleLine="true"
-                android:text="TextView"
+                android:text="@string/sample_description"
                 android:textAppearance="@style/Theme.Phonograph.Notification"
                 android:textColor="@color/textColorSecondary" />
         </LinearLayout>
