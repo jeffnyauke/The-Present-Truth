@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2018. Jeffrey Nyauke.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.piestack.adventelegraph.ui.bible
 
 import android.app.SearchManager
@@ -5,75 +21,89 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
 import androidx.viewpager.widget.PagerAdapter
 import com.piestack.adventelegraph.R
-import com.piestack.adventelegraph.app.MyApplication
-import com.piestack.adventelegraph.di.module.DatabaseModule
+import com.piestack.adventelegraph.di.ViewModelFactory
+import com.piestack.adventelegraph.models.event.VerseEvent
 import com.piestack.adventelegraph.models.room.Book
 import com.piestack.adventelegraph.models.room.VerseRef
+import com.piestack.adventelegraph.ui.base.BaseThemedActivity
 import com.piestack.adventelegraph.ui.bible.dialog.TabbedDialog
-import com.piestack.adventelegraph.ui.bible.dialog.fragment.FragmentBook
-import com.piestack.adventelegraph.ui.bible.dialog.fragment.FragmentChapter
-import com.piestack.adventelegraph.ui.bible.dialog.fragment.FragmentVerse
 import com.piestack.adventelegraph.ui.bible.fragment.BibleFragment
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.subscribeBy
+import com.piestack.adventelegraph.util.getViewModel
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_bible.*
 import kotlinx.android.synthetic.main.toolbar.*
 import timber.log.Timber
 import javax.inject.Inject
 
 
-class Bible : AppCompatActivity(), BibleFragment.FragmentBibleListener, FragmentBook.FragmentBookListener, FragmentChapter.FragmentChapterListener, FragmentVerse.FragmentVerseListener {
-
-    private val compositeDisposable by lazy { CompositeDisposable() }
+class Bible : BaseThemedActivity() {
 
     @Inject
-    lateinit var bibleActivityViewModelFactory: BibleActivityViewModelFactory
-    private lateinit var bibleActivityViewModel: BibleActivityViewModel
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private lateinit var viewModel: BibleActivityViewModel
 
     private var verseRef = VerseRef()
     private lateinit var books: ArrayList<Book>
 
     private val dialog = TabbedDialog()
-    private lateinit var menu: Menu
+    private var menu: Menu? = null
 
-    private var NUM_PAGES = 1189
     private var mPagerAdapter: PagerAdapter? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bible)
 
-        MyApplication.getComponent(this)?.getDatabaseComponent(DatabaseModule(this))?.inject(this)
-        bibleActivityViewModel = ViewModelProviders.of(this, bibleActivityViewModelFactory).get(BibleActivityViewModel::class.java)
+        viewModel = getViewModel(this, viewModelFactory)
+        viewModel.getBooks()
+        viewModel.getNewPage()
+        viewModel.getVerseClicked()
 
-        setSupportActionBar(toolbar)
-        supportActionBar?.title =
-                this.resources.getString(R.string.bible)
+        initUI()
 
-        compositeDisposable.add(bibleActivityViewModel.getBooks()
-                .subscribeBy { vitabu ->
-                    books = vitabu
-                    try {
-                        Timber.e(books.size.toString())
-                        Timber.e(books[0].BookName)
+        viewModel.getBooksResult.observe(this, Observer {
+            it?.let { allBooks ->
+                books = allBooks
+                mPagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
+                pager.apply {
+                    adapter = mPagerAdapter
+                }
+            }
+        })
 
-                        mPagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
-                        pager.adapter = mPagerAdapter
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                })
+        viewModel.newPage.observe(this, Observer {
+            it?.let { newPageEvent ->
+                this.verseRef.book = newPageEvent.book - 1
+                this.verseRef.bookNameFull = books[newPageEvent.book - 1].BookName
+                this.verseRef.chapter = newPageEvent.chapter
+                this.verseRef.verse = newPageEvent.verse
+                updateMenuTitles()
+            }
+        })
+
+        viewModel.clickedVerse.observe(this, Observer {
+            it?.let {
+                updatePager(it)
+            }
+        })
 
         // Get the intent, verify the action and get the query
         handleIntent(intent)
+    }
+
+    private fun initUI() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.title =
+                this.resources.getString(R.string.bible)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -92,63 +122,34 @@ class Bible : AppCompatActivity(), BibleFragment.FragmentBibleListener, Fragment
         dialog.show(supportFragmentManager, "tag")
     }
 
-    override fun onBookClick(position: Int, name: String, chapters: Int) {
-        verseRef.book = position + 1
-        verseRef.bookNameFull = name
-        dialog.viewPager.setCurrentItem(1, true)
-    }
-
-    override fun onChapterClick(position: Int) {
-        verseRef.chapter = position + 1
-        dialog.viewPager.setCurrentItem(2, true)
-    }
-
-    override fun onVerseClick(position: Int) {
-        //verse = String.format("%03d", (position + 1))
-        verseRef.verse = position + 1
-
-        updatePager()
-
-        this.dialog.dismiss()
-    }
-
-    override fun onNewPage(verseRef: VerseRef) {
-        this.verseRef.book = verseRef.book
-        this.verseRef.bookNameFull = books[verseRef.book - 1].BookName
-        this.verseRef.chapter = verseRef.chapter
-        this.verseRef.verse = verseRef.verse
-        updateMenuTitles()
-    }
-
     private fun updateMenuTitles() {
         val string = "${verseRef.bookNameFull} ${verseRef.chapter - 1}"
-        val menuItem = menu.findItem(R.id.action_chapter)
-        menuItem.title = string
+        val menuItem = menu?.findItem(R.id.action_chapter)
+        menuItem?.title = string
     }
 
-    private fun updatePager() {
+    private fun updatePager(verseEvent: VerseEvent) {
 
         var pagerPosition = 0
         var currentBookChapters = 0
 
         for ((i, book) in books.withIndex()) {
             Timber.e("Pager iterations: $i")
-            if (i < verseRef.book) {
+            if (i < verseEvent.book) {
                 pagerPosition += book.NumOfChapters
                 currentBookChapters = book.NumOfChapters
             } else break
         }
 
-        pagerPosition += verseRef.chapter - currentBookChapters
+        pagerPosition += verseEvent.chapter - currentBookChapters
         Timber.e("Pager position: $pagerPosition")
 
         pager.setCurrentItem(pagerPosition, true)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.clear()
-        compositeDisposable.dispose()
+    override fun onBackPressed() {
+        if (dialog.isVisible) dialog.dismiss()
+        super.onBackPressed()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -178,9 +179,10 @@ class Bible : AppCompatActivity(), BibleFragment.FragmentBibleListener, Fragment
          * Return the number of views available.
          */
         lateinit var bibleFragment: BibleFragment
+        private val numPages = 1189
 
         override fun getCount(): Int {
-            return NUM_PAGES
+            return numPages
         }
 
         override fun getItem(position: Int): Fragment {

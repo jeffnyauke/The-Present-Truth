@@ -1,3 +1,19 @@
+/*
+ * Copyright (c) 2018. Jeffrey Nyauke.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.piestack.adventelegraph.ui.bible.dialog
 
 import android.app.Dialog
@@ -7,64 +23,100 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.piestack.adventelegraph.R
-import com.piestack.adventelegraph.app.MyApplication
-import com.piestack.adventelegraph.di.module.DatabaseModule
+import com.piestack.adventelegraph.di.ViewModelFactory
 import com.piestack.adventelegraph.ui.bible.BibleActivityViewModel
-import com.piestack.adventelegraph.ui.bible.BibleActivityViewModelFactory
 import com.piestack.adventelegraph.ui.bible.dialog.fragment.FragmentBook
 import com.piestack.adventelegraph.ui.bible.dialog.fragment.FragmentChapter
 import com.piestack.adventelegraph.ui.bible.dialog.fragment.FragmentVerse
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.subscribeBy
+import com.piestack.adventelegraph.util.getViewModel
+import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
 
-class TabbedDialog : DialogFragment(), FragmentBook.FragmentBookListener, FragmentChapter.FragmentChapterListener, FragmentVerse.FragmentVerseListener {
+class TabbedDialog : DialogFragment() {
 
     private lateinit var tabLayout: TabLayout
     lateinit var viewPager: ViewPager
-    private var book: Int = 0
     private var bookname: String = ""
     private var chapter: Int = 0
     private var verse: Int = 0
-    private val compositeDisposable by lazy { CompositeDisposable() }
 
     @Inject
-    lateinit var bibleActivityViewModelFactory: BibleActivityViewModelFactory
-    private lateinit var bibleActivityViewModel: BibleActivityViewModel
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private lateinit var viewModel: BibleActivityViewModel
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-
         val rootview = activity?.layoutInflater?.inflate(R.layout.dialog_bible, container, false)
 
-        this.setStyle(androidx.fragment.app.DialogFragment.STYLE_NO_FRAME, theme)
+        this.setStyle(androidx.fragment.app.DialogFragment.STYLE_NO_INPUT, R.style.Theme_Advent_Dialog)
 
         tabLayout = rootview?.findViewById<View>(R.id.tabLayout) as TabLayout
         viewPager = rootview.findViewById<View>(R.id.masterViewPager) as ViewPager
 
-        val adapter = TabbedDialogAdapter(childFragmentManager)
+        return rootview
+    }
 
-        MyApplication.getComponent(requireActivity())?.getDatabaseComponent(DatabaseModule(requireActivity()))?.inject(this)
-        bibleActivityViewModel = ViewModelProviders.of(this, bibleActivityViewModelFactory).get(BibleActivityViewModel::class.java)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidSupportInjection.inject(this)
+        super.onCreate(savedInstanceState)
 
-        compositeDisposable.add(bibleActivityViewModel.getBooks().subscribeBy { books ->
-            adapter.addFragment("BOOK", FragmentBook.createInstance(1, books))
-            adapter.addFragment("CHAPTER", FragmentChapter.createInstance(1, books))
-            adapter.addFragment("VERSE", FragmentVerse.createInstance(23))
-            adapter.notifyDataSetChanged()
+        viewModel = getViewModel(this, viewModelFactory)
+        viewModel.getBooks()
+        viewModel.getBookClicked()
+        viewModel.getChapterClicked()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.getBooksResult.observe(this, Observer {
+            it?.let { books ->
+                val adapter = TabbedDialogAdapter(childFragmentManager)
+
+                adapter.addFragment("BOOK", FragmentBook.createInstance(books))
+                adapter.addFragment("CHAPTER", FragmentChapter.createInstance(books))
+                adapter.addFragment("VERSE", FragmentVerse.createInstance(40))
+
+                adapter.notifyDataSetChanged()
+                viewPager.apply {
+                    this.adapter = adapter
+                }
+                tabLayout.apply {
+                    setupWithViewPager(viewPager)
+                }
+            }
         })
 
+        viewModel.clickedBook.observe(this, Observer {
+            it?.let { bookEvent ->
+                bookname = bookEvent.name
+                viewPager.setCurrentItem(1, true)
+                dialog.setTitle(bookname)
+            }
+        })
 
-        viewPager.adapter = adapter
-        tabLayout.setupWithViewPager(viewPager)
+        viewModel.clickedChapter.observe(this, Observer {
+            it?.let { chapterEvent ->
+                chapter = chapterEvent.position
+                dialog.setTitle("$bookname ${chapter + 1}")
+                viewPager.setCurrentItem(2, true)
+            }
+        })
 
-        return rootview
+        viewModel.clickedVerse.observe(this, Observer {
+            it?.let { verseEvent ->
+                verse = verseEvent.position
+                dialog.setTitle("$bookname ${chapter + 1} ${verse + 1}")
+                this.dialog.dismiss()
+            }
+        })
     }
 
     /** The system calls this only when creating the layout in a dialog.  */
@@ -75,25 +127,8 @@ class TabbedDialog : DialogFragment(), FragmentBook.FragmentBookListener, Fragme
         // remove the dialog title, but you must call the superclass to get the Dialog.
         val dialog = super.onCreateDialog(savedInstanceState)
         //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY)
         return dialog
     }
 
-    override fun onBookClick(position: Int, name: String, chapters: Int) {
-        book = position
-        bookname = name
-        viewPager.setCurrentItem(1, true)
-        dialog.setTitle("$bookname $chapter:$verse")
-    }
-
-    override fun onChapterClick(position: Int) {
-        chapter = position
-        viewPager.setCurrentItem(2, true)
-    }
-
-    override fun onVerseClick(position: Int) {
-        //verse = String.format("%03d", (position + 1))
-        verse = position
-        this.dialog.dismiss()
-    }
 }

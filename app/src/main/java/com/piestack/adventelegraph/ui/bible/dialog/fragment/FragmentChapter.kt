@@ -1,74 +1,93 @@
+/*
+ * Copyright (c) 2018. Jeffrey Nyauke.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.piestack.adventelegraph.ui.bible.dialog.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.piestack.adventelegraph.R
+import com.piestack.adventelegraph.di.ViewModelFactory
+import com.piestack.adventelegraph.models.event.ChapterEvent
 import com.piestack.adventelegraph.models.room.Book
+import com.piestack.adventelegraph.ui.bible.BibleActivityViewModel
+import com.piestack.adventelegraph.util.RxBus
+import com.piestack.adventelegraph.util.getViewModel
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_book_sample.view.*
 import timber.log.Timber
+import javax.inject.Inject
 
-class FragmentChapter : Fragment(), FragmentBook.FragmentBookListener {
-    override fun onBookClick(position: Int, name: String, chapters: Int) {
-        book = position + 1
-        mAdapter = FragmentChapterAdapter(requireActivity(), books[book].NumOfChapters)
-        mAdapter.notifyDataSetChanged()
-        Timber.e("Update books")
-    }
+class FragmentChapter : Fragment() {
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var viewModel: BibleActivityViewModel
 
     private lateinit var books: ArrayList<Book>
     private var book: Int = 0
     private lateinit var mAdapter: FragmentChapterAdapter
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        val v = activity?.layoutInflater!!.inflate(R.layout.fragment_book_sample, container, false)
+        return activity?.layoutInflater!!.inflate(R.layout.fragment_book_sample, container, false)
+
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidSupportInjection.inject(this)
+        super.onCreate(savedInstanceState)
+        viewModel = getViewModel(this, viewModelFactory)
+        viewModel.getBookClicked()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         mAdapter = FragmentChapterAdapter(requireActivity(), books[book].NumOfChapters)
-
-        v.gridview.adapter = mAdapter
-
-        v.gridview.onItemClickListener =
+        view.gridview.adapter = mAdapter
+        view.gridview.onItemClickListener =
                 AdapterView.OnItemClickListener { parent, v, position, id ->
-                    mListener.onChapterClick(position)
+                    RxBus.getInstance().send(ChapterEvent(position, book))
                 }
 
-        return v
+        viewModel.clickedBook.observe(this, Observer {
+            it?.let { bookEvent ->
+                book = bookEvent.position
+                mAdapter.apply {
+                    refillAdapter(bookEvent.chapters)
+                }
+                Timber.e("Updated dialog fragment chapters to: ${bookEvent.chapters}")
+            }
+        })
+
     }
 
     companion object {
-        fun createInstance(book: Int, books: ArrayList<Book>): FragmentChapter {
+        fun createInstance(books: ArrayList<Book>): FragmentChapter {
             val fragment = FragmentChapter()
             fragment.books = books
-            fragment.book = book
             return fragment
         }
     }
 
-    fun updateChapters(int: Int) {
-        book = int
-        mAdapter.notifyDataSetChanged()
-        Toast.makeText(requireActivity(), "Book", Toast.LENGTH_SHORT).show()
-    }
-
-    interface FragmentChapterListener {
-        fun onChapterClick(position: Int)
-    }
-
-    lateinit var mListener: FragmentChapterListener
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        try {
-            mListener = context as FragmentChapterListener
-        } catch (e: ClassCastException) {
-            throw ClassCastException(context!!.toString() + " must implement FragmentChapterListener")
-        }
-    }
 }

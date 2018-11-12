@@ -1,26 +1,38 @@
+/*
+ * Copyright (c) 2018. Jeffrey Nyauke.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.piestack.adventelegraph.ui.bible.fragment
 
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.Observer
 import com.piestack.adventelegraph.R
-import com.piestack.adventelegraph.app.MyApplication
-import com.piestack.adventelegraph.di.module.DatabaseModule
+import com.piestack.adventelegraph.di.ViewModelFactory
+import com.piestack.adventelegraph.models.event.NewPageEvent
 import com.piestack.adventelegraph.models.room.Book
-import com.piestack.adventelegraph.models.room.VerseRef
-import com.piestack.adventelegraph.models.room.kjv
 import com.piestack.adventelegraph.ui.bible.BibleActivityViewModel
-import com.piestack.adventelegraph.ui.bible.BibleActivityViewModelFactory
 import com.piestack.adventelegraph.ui.bible.BibleAdapter
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.subscribeBy
+import com.piestack.adventelegraph.util.RxBus
+import com.piestack.adventelegraph.util.getViewModel
+import com.piestack.adventelegraph.util.vertical
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.fragment_bible.view.*
 import timber.log.Timber
 import javax.inject.Inject
@@ -32,49 +44,48 @@ import javax.inject.Inject
  */
 class BibleFragment : Fragment() {
 
-    private val compositeDisposable by lazy { CompositeDisposable() }
-
     @Inject
-    lateinit var bibleActivityViewModelFactory: BibleActivityViewModelFactory
-    private lateinit var bibleActivityViewModel: BibleActivityViewModel
-    private lateinit var layoutManager: LinearLayoutManager
+    lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var viewModel: BibleActivityViewModel
 
-    private lateinit var verses: ArrayList<kjv>
-    private lateinit var adapter: BibleAdapter
+    private lateinit var bibleAdapter: BibleAdapter
 
-    private var verseRef = VerseRef()
+    private var newPageEvent = NewPageEvent()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val v = inflater.inflate(R.layout.fragment_bible, container, false)
-        MyApplication.getComponent(requireContext())?.getDatabaseComponent(DatabaseModule(requireContext()))?.inject(this)
-        bibleActivityViewModel = ViewModelProviders.of(this, bibleActivityViewModelFactory).get(BibleActivityViewModel::class.java)
+        return inflater.inflate(R.layout.fragment_bible, container, false)
+    }
 
-        layoutManager = LinearLayoutManager(requireContext(), LinearLayout.VERTICAL, false)
-        v.recycler.layoutManager = layoutManager
+    override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidSupportInjection.inject(this)
+        super.onCreate(savedInstanceState)
+        viewModel = getViewModel(this, viewModelFactory)
+        viewModel.getChapter(newPageEvent.chapter, newPageEvent.book)
 
-        verses = ArrayList()
+    }
 
-        adapter = BibleAdapter(verses)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        v.recycler.adapter = adapter
-
-        mListener.onNewPage(verseRef)
-
-        compositeDisposable.add(bibleActivityViewModel.getChapter(verseRef.chapter, verseRef.book)
-                .subscribeBy { chapterVerses ->
-                    verses = chapterVerses
-                    adapter.refill(verses)
-                    layoutManager.scrollToPositionWithOffset(verseRef.verse - 1, 0)
-                    try {
-                        Timber.e(verses.size.toString())
-                        Timber.e(verses[0].t)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                })
-        return v
+        viewModel.getChapterResult.observe(this, Observer {
+            it?.let { verses ->
+                bibleAdapter = BibleAdapter(verses)
+                view.recycler.apply {
+                    vertical()
+                    adapter = bibleAdapter
+                    layoutManager?.scrollToPosition(newPageEvent.verse - 1)
+                }
+                try {
+                    Timber.e(verses.size.toString())
+                    Timber.e(verses[0].t)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                RxBus.getInstance().send(newPageEvent)
+            }
+        })
     }
 
     companion object {
@@ -89,12 +100,12 @@ class BibleFragment : Fragment() {
                 bookNo += 1
                 cumulative += book.NumOfChapters
 
-                if (position + 1 > cumulative) continue
+                if (position >= cumulative) continue
                 else {
-                    fragment.verseRef.book = bookNo
-                    fragment.verseRef.chapter = (position + 1) - (cumulative - book.NumOfChapters)
-                    fragment.verseRef.verse = verse
-                    Timber.e("Else: $position ${fragment.verseRef.book} ${fragment.verseRef.chapter} ${fragment.verseRef.verse}")
+                    fragment.newPageEvent.book = bookNo
+                    fragment.newPageEvent.chapter = (position + 1) - (cumulative - book.NumOfChapters)
+                    fragment.newPageEvent.verse = verse
+                    Timber.e("Else: $position ${fragment.newPageEvent.book} ${fragment.newPageEvent.chapter} ${fragment.newPageEvent.verse}")
                     break
                 }
             }
@@ -103,18 +114,4 @@ class BibleFragment : Fragment() {
         }
     }
 
-    interface FragmentBibleListener {
-        fun onNewPage(verseRef: VerseRef)
-    }
-
-    lateinit var mListener: FragmentBibleListener
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        try {
-            mListener = context as FragmentBibleListener
-        } catch (e: ClassCastException) {
-            throw ClassCastException(context!!.toString() + " must implement FragmentVerseListener")
-        }
-    }
 }

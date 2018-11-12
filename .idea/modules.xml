@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Advent Telegraph.iml" filepath="$PROJECT_DIR$/Advent Telegraph.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bible/bible.iml" filepath="$PROJECT_DIR$/bible/bible.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hymnal/hymnal.iml" filepath="$PROJECT_DIR$/hymnal/hymnal.iml" />
     </modules>
   </component>
 </project>
