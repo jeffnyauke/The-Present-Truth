@@ -19,8 +19,8 @@
 
     <size
         android:width="1px"
-        android:height="1px" />
+        android:height="1dp" />
 
-    <solid android:color="@color/list_divider" />
+    <solid android:color="@color/divider" />
 
 </shape>

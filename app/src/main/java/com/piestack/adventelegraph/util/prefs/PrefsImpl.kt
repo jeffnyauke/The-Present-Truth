@@ -14,43 +14,45 @@
  * limitations under the License.
  */
 
-package com.tinashe.christInSong.utils.prefs
+package com.piestack.adventelegraph.util.prefs
 
 import android.content.Context
-import android.content.SharedPreferences
-import android.preference.PreferenceManager
+import com.piestack.adventelegraph.util.prefs.PreferenceHelper.get
+import com.piestack.adventelegraph.util.prefs.PreferenceHelper.set
 
 class PrefsImpl constructor(val context: Context) : Prefs {
 
-    private val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    private val prefs = PreferenceHelper.defaultPrefs(context)
 
-    override fun getLanguage(): String = prefs.getString(PREF_LANGUAGE, "eng") as String
+    override fun getLanguage(): String = prefs[PREF_LANGUAGE, "eng"]
 
     override fun setLanguage(language: String) {
-        prefs.edit()
-                .putString(PREF_LANGUAGE, language)
-                .apply()
+        prefs[PREF_LANGUAGE] = language
     }
 
-    override fun getLastHymnNumber(): Int = prefs.getInt(PREF_LAST_NUMBER, 0)
+    override fun getLastHymnNumber(): Int = prefs[PREF_LAST_NUMBER, 0]
 
     override fun setLastHymnNumber(number: Int) {
-        prefs.edit()
-                .putInt(PREF_LAST_NUMBER, number)
-                .apply()
+        prefs[PREF_LAST_NUMBER] = number
     }
 
-    override fun isNightMode(): Boolean = prefs.getBoolean(PREF_NIGHT_MODE, false)
+    override fun isNightMode(): Boolean = prefs[PREF_NIGHT_MODE, false]
 
     override fun setNightMode(isNight: Boolean) {
-        prefs.edit()
-                .putBoolean(PREF_NIGHT_MODE, isNight)
-                .apply()
+        prefs[PREF_NIGHT_MODE] = isNight
     }
+
+    override fun isFirstStart(): Boolean = prefs[PREF_FIRST_START, true]
+
+    override fun setFirstStart(isFirst: Boolean) {
+        prefs[PREF_NIGHT_MODE] = isFirst
+    }
+
 
     companion object {
         private const val PREF_LANGUAGE = "LANGUAGE"
         private const val PREF_LAST_NUMBER = "LAST_NUMBER"
         private const val PREF_NIGHT_MODE = "NIGHT_MODE"
+        private const val PREF_FIRST_START = "FIRST_START"
     }
 }

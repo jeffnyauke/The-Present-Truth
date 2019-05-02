@@ -17,6 +17,7 @@
 package com.piestack.adventelegraph.util
 
 import io.reactivex.*
+import io.reactivex.schedulers.Schedulers
 
 class SchedulerProvider(private val backgroundScheduler: Scheduler, private val foregroundScheduler: Scheduler) {
 
@@ -30,6 +31,13 @@ class SchedulerProvider(private val backgroundScheduler: Scheduler, private val 
     fun <T> getSchedulersForSingle(): (Single<T>) -> Single<T> {
         return { single: Single<T> ->
             single.subscribeOn(backgroundScheduler)
+                    .observeOn(foregroundScheduler)
+        }
+    }
+
+    fun <T> getSchedulersForFirebase(): (Observable<T>) -> Observable<T> {
+        return { observable: Observable<T> ->
+            observable.subscribeOn(Schedulers.single())
                     .observeOn(foregroundScheduler)
         }
     }

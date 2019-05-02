@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/D:/Users/Jeffrey%20Nyauke/Downloads/Programs/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_search_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/D:/Users/Jeffrey%20Nyauke/Downloads/Programs/android-studio-ide-182.5114240-windows/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/communication/ic_comment_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -34,7 +34,7 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="666666" />
-                            <entry key="outputName" value="ic_search_white" />
+                            <entry key="outputName" value="ic_comments" />
                             <entry key="sourceFile" value="C:\Users\Jeffrey Nyauke" />
                           </map>
                         </option>

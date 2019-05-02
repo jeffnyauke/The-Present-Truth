@@ -19,25 +19,25 @@ package com.piestack.adventelegraph.repository
 import com.piestack.adventelegraph.local.BooksDAO
 import com.piestack.adventelegraph.local.KjvDAO
 import com.piestack.adventelegraph.models.room.Book
-import com.piestack.adventelegraph.models.room.kjv
+import com.piestack.adventelegraph.models.room.Kjv
 import io.reactivex.Flowable
 import java.util.concurrent.Executor
 
 class LocalRepositoryImpl(private val kjvDAO: KjvDAO, private val booksDAO: BooksDAO, private val executor: Executor) : LocalRepository {
 
-    override val allVerses: Flowable<ArrayList<kjv>>
-        get() = kjvDAO.getAll() as Flowable<ArrayList<kjv>>
+    override val allVerses: Flowable<ArrayList<Kjv>>
+        get() = kjvDAO.getAll() as Flowable<ArrayList<Kjv>>
 
-    override fun getVerse(id: Int): Flowable<kjv> {
+    override fun getVerse(id: Int): Flowable<Kjv> {
         return kjvDAO.getVerse(id)
     }
 
-    override fun getChapter(chapter: Int, book: Int): Flowable<ArrayList<kjv>> {
-        return kjvDAO.getChapter(chapter, book) as Flowable<ArrayList<kjv>>
+    override fun getChapter(chapter: Int, book: Int): Flowable<ArrayList<Kjv>> {
+        return kjvDAO.getChapter(chapter, book) as Flowable<ArrayList<Kjv>>
     }
 
-    override fun getRange(start: Int, end: Int): Flowable<ArrayList<kjv>> {
-        return kjvDAO.getRange(start, end) as Flowable<ArrayList<kjv>>
+    override fun getRange(start: Int, end: Int): Flowable<ArrayList<Kjv>> {
+        return kjvDAO.getRange(start, end) as Flowable<ArrayList<Kjv>>
     }
 
     override fun getNoOfChapters(book: Int): Flowable<Int> {
@@ -48,7 +48,7 @@ class LocalRepositoryImpl(private val kjvDAO: KjvDAO, private val booksDAO: Book
         return kjvDAO.getNoOfVerses(chapter, book)
     }
 
-    override fun insertBible(bible: ArrayList<kjv>) {
+    override fun insertBible(bible: ArrayList<Kjv>) {
         executor.execute { kjvDAO.insert(bible) }
     }
 

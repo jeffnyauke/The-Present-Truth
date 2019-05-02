@@ -35,7 +35,7 @@ class RxBus private constructor() {
         return bus.filter(type::isInstance).cast(type)
     }
 
-    fun hasObservers(): Boolean {
+    private fun hasObservers(): Boolean {
         return bus.hasObservers()
     }
 

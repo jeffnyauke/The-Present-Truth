@@ -14,122 +14,114 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/guideline_margin"
     android:background="@color/windowBackground"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="@dimen/image_post_author"
+        android:layout_height="@dimen/image_post_author"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="@dimen/guideline_margin"
+        android:layout_marginLeft="@dimen/guideline_margin"
+        android:layout_marginTop="@dimen/guideline_margin"
+        android:adjustViewBounds="true"
+        android:background="@color/light_gray_100"
+        android:contentDescription="@string/image"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/image"
+        android:layout_toRightOf="@+id/image"
+        android:ellipsize="end"
+        android:maxLines="6"
+        android:paddingLeft="@dimen/guideline_margin"
+        android:paddingTop="@dimen/guideline_margin"
+        android:paddingRight="@dimen/guideline_margin"
+        android:text="@string/lorem_ipsum_title"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        android:textColor="@color/textColorPrimaryDark" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_toEndOf="@+id/image"
+        android:layout_toRightOf="@+id/image"
+        android:ellipsize="end"
+        android:maxLines="6"
+        android:paddingLeft="@dimen/guideline_margin"
+        android:paddingTop="@dimen/guideline_quarter"
+        android:paddingRight="@dimen/guideline_margin"
+        android:text="@string/lorem_ipsum_text"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="@dimen/image_post_author"
-                android:layout_height="@dimen/image_post_author"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="@dimen/guideline_margin"
-                android:layout_marginStart="@dimen/guideline_margin"
-                android:layout_marginTop="@dimen/guideline_margin"
-                android:adjustViewBounds="true"
-                android:background="@color/light_gray_100"
-                android:scaleType="centerCrop" />
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/image"
-                android:layout_toRightOf="@+id/image"
-                android:ellipsize="end"
-                android:maxLines="6"
-                android:paddingLeft="@dimen/guideline_margin"
-                android:paddingRight="@dimen/guideline_margin"
-                android:paddingTop="@dimen/guideline_margin"
-                android:text="@string/lorem_ipsum_title"
-                android:textColor="@color/textColorPrimaryDark"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
-
-            <TextView
-                android:id="@+id/text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/title"
-                android:layout_toEndOf="@+id/image"
-                android:layout_toRightOf="@+id/image"
-                android:ellipsize="end"
-                android:maxLines="6"
-                android:paddingLeft="@dimen/guideline_margin"
-                android:paddingRight="@dimen/guideline_margin"
-                android:paddingTop="@dimen/guideline_quarter"
-                android:text="@string/lorem_ipsum_text"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/text">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text">
 
 
-                <ImageView
-                    android:id="@+id/bookmark"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/share"
-                    android:layout_toStartOf="@+id/share"
-                    android:paddingTop="@dimen/guideline_margin"
-                    android:paddingLeft="@dimen/guideline_margin"
-                    android:paddingRight="@dimen/guideline_margin"
-                    android:paddingBottom="@dimen/guideline_margin"
-                    android:scaleType="centerCrop"
-                    android:visibility="invisible"
-                    app:srcCompat="@drawable/bookmark" />
 
-                <ImageView
-                    android:id="@+id/share"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:paddingTop="@dimen/guideline_margin"
-                    android:paddingEnd="@dimen/guideline_margin"
-                    android:paddingLeft="@dimen/guideline_half"
-                    android:paddingRight="@dimen/guideline_margin"
-                    android:paddingStart="@dimen/guideline_half"
-                    android:paddingBottom="@dimen/guideline_margin"
-                    android:scaleType="centerCrop"
-                    android:visibility="invisible"
-                    app:srcCompat="@drawable/share" />
+        <ImageView
+            android:id="@+id/bookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/share"
+            android:layout_toLeftOf="@+id/share"
+            android:paddingLeft="@dimen/guideline_margin"
+            android:paddingTop="@dimen/guideline_margin"
+            android:paddingRight="@dimen/guideline_margin"
+            android:paddingBottom="@dimen/guideline_margin"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/bookmark" />
 
-                <TextView
-                    android:id="@+id/timestamp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginLeft="0dp"
-                    android:fontFamily="sans-serif"
-                    android:paddingStart="@dimen/guideline_margin"
-                    android:paddingLeft="@dimen/guideline_margin"
-                    android:text="@string/lorem_ipsum_time" />
+        <ImageView
+            android:id="@+id/share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/image"
+            android:paddingStart="@dimen/guideline_half"
+            android:paddingLeft="@dimen/guideline_half"
+            android:paddingTop="@dimen/guideline_margin"
+            android:paddingEnd="@dimen/guideline_margin"
+            android:paddingRight="@dimen/guideline_margin"
+            android:paddingBottom="@dimen/guideline_margin"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/share" />
 
-            </RelativeLayout>
+        <TextView
+            android:id="@+id/timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_toStartOf="@id/bookmark"
+            android:layout_toLeftOf="@id/bookmark"
+            android:fontFamily="sans-serif"
+            android:paddingStart="@dimen/guideline_margin"
+            android:paddingLeft="@dimen/guideline_margin"
+            android:paddingEnd="@dimen/guideline_margin"
+            android:paddingRight="@dimen/guideline_margin"
+            android:text="@string/lorem_ipsum_time" />
 
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 
-</FrameLayout>
+</RelativeLayout>
 
 

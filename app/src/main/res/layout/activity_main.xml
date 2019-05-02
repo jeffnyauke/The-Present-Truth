@@ -37,7 +37,7 @@
         android:scrollbars="none"
         app:itemIconTint="@color/darkPrimary"
         android:fitsSystemWindows="true"
-        app:itemTextAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        app:itemTextAppearance="@style/TextAppearance.MaterialComponents.Body2"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.tinashe.christInSong.utils.prefs
+package com.piestack.adventelegraph.util.prefs
 
 interface Prefs {
 
@@ -29,4 +29,8 @@ interface Prefs {
     fun isNightMode(): Boolean
 
     fun setNightMode(isNight: Boolean)
+
+    fun isFirstStart(): Boolean
+
+    fun setFirstStart(isFirst: Boolean)
 }

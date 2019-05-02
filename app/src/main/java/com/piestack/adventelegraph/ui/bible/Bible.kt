@@ -59,7 +59,6 @@ class Bible : BaseThemedActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bible)
 
@@ -90,8 +89,8 @@ class Bible : BaseThemedActivity() {
             }
         })
 
-        viewModel.clickedVerse.observe(this, Observer {
-            it?.let {
+        viewModel.clickedVerse.observe(this, Observer { verseEvent ->
+            verseEvent?.let {
                 updatePager(it)
             }
         })

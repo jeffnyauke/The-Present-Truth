@@ -20,6 +20,9 @@ import android.content.Context
 import android.content.res.Resources
 import android.view.LayoutInflater
 import androidx.room.Room
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.gson.FieldNamingPolicy
@@ -35,8 +38,8 @@ import com.piestack.adventelegraph.repository.LocalRepositoryImpl
 import com.piestack.adventelegraph.repository.remote.FirebaseRepository
 import com.piestack.adventelegraph.repository.remote.FirebaseRepositoryImpl
 import com.piestack.adventelegraph.util.SchedulerProvider
-import com.tinashe.christInSong.utils.prefs.Prefs
-import com.tinashe.christInSong.utils.prefs.PrefsImpl
+import com.piestack.adventelegraph.util.prefs.Prefs
+import com.piestack.adventelegraph.util.prefs.PrefsImpl
 import dagger.Module
 import dagger.Provides
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -56,17 +59,19 @@ internal class AppModule {
     fun provideContext(app: MyApplication): Context = app
 
     @Provides
-    @Singleton
     fun provideFireStoreDatabase(): FirebaseFirestore {
         val store = FirebaseFirestore.getInstance()
         val settings = FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(false)
                 .setTimestampsInSnapshotsEnabled(true)
                 .build()
         store.firestoreSettings = settings
 
         return store
     }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 
     @Provides
     @Singleton
@@ -85,6 +90,13 @@ internal class AppModule {
     @Provides
     @Singleton
     fun provideSchedulerProvider() = SchedulerProvider(Schedulers.io(), AndroidSchedulers.mainThread())
+
+    @Provides
+    @Singleton
+    fun provideRequestOptions(): RequestOptions = RequestOptions().apply {
+        centerCrop()
+        diskCacheStrategy(DiskCacheStrategy.ALL)
+    }
 
     @Provides
     @Singleton
@@ -129,8 +141,8 @@ internal class AppModule {
 
     @Provides
     @Singleton
-    fun getFirebaseRepo(firestore: FirebaseFirestore): FirebaseRepository {
-        return FirebaseRepositoryImpl(firestore)
+    fun getFirebaseRepo(): FirebaseRepository {
+        return FirebaseRepositoryImpl()
     }
 
     @Provides

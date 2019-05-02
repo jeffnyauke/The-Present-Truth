@@ -14,77 +14,118 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentTop="true"
-    android:layout_marginTop="@dimen/guideline_margin"
     android:background="@color/windowBackground"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="@dimen/guideline_margin"
+        android:layout_toStartOf="@id/image"
+        android:layout_toLeftOf="@id/image"
+        android:ellipsize="end"
+        android:maxLines="6"
+        android:paddingLeft="@dimen/guideline_margin"
+        android:paddingRight="@dimen/guideline_margin"
+        android:text="@string/lorem_ipsum_title"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_toStartOf="@id/image"
+        android:layout_toLeftOf="@id/image"
+        android:ellipsize="end"
+        android:maxLines="6"
+        android:paddingStart="@dimen/guideline_margin"
+        android:paddingLeft="@dimen/guideline_margin"
+        android:paddingTop="@dimen/guideline_quarter"
+        android:paddingEnd="@dimen/guideline_half"
+        android:paddingRight="@dimen/guideline_margin"
+        android:text="@string/lorem_ipsum_text"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="@dimen/guideline_margin"
-                android:layout_toStartOf="@id/image"
-                android:layout_toLeftOf="@id/image"
-                android:ellipsize="end"
-                android:maxLines="6"
-                android:paddingLeft="@dimen/guideline_margin"
-                android:paddingRight="@dimen/guideline_margin"
-                android:text="@string/lorem_ipsum_title"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
-
-            <TextView
-                android:id="@+id/text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/title"
-                android:layout_toStartOf="@id/image"
-                android:layout_toLeftOf="@id/image"
-                android:ellipsize="end"
-                android:maxLines="6"
-                android:paddingStart="@dimen/guideline_margin"
-                android:paddingLeft="@dimen/guideline_margin"
-                android:paddingTop="@dimen/guideline_quarter"
-                android:paddingEnd="@dimen/guideline_half"
-                android:paddingRight="@dimen/guideline_half"
-                android:text="@string/lorem_ipsum_text"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/text">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text">
 
 
-                <TextView
-                    android:id="@+id/timestamp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:paddingStart="@dimen/guideline_margin"
-                    android:paddingLeft="@dimen/guideline_margin"
-                    android:text="@string/lorem_ipsum_time"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+        <TextView
+            android:id="@+id/timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/bookmark"
+            android:layout_toLeftOf="@id/bookmark"
+            android:paddingStart="@dimen/guideline_margin"
+            android:paddingLeft="@dimen/guideline_margin"
+            android:paddingEnd="@dimen/guideline_margin"
+            android:paddingRight="@dimen/guideline_margin"
+            android:text="@string/lorem_ipsum_time"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
 
-                <ImageView
+        <ImageView
+            android:id="@+id/bookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/share"
+            android:layout_toLeftOf="@+id/share"
+            android:paddingLeft="@dimen/guideline_margin"
+            android:paddingTop="@dimen/guideline_margin"
+            android:paddingRight="@dimen/guideline_margin"
+            android:paddingBottom="@dimen/guideline_margin"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/bookmark" />
+
+        <ImageView
+            android:id="@+id/share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/image"
+            android:paddingStart="@dimen/guideline_half"
+            android:paddingLeft="@dimen/guideline_half"
+            android:paddingTop="@dimen/guideline_margin"
+            android:paddingEnd="@dimen/guideline_margin"
+            android:paddingRight="@dimen/guideline_margin"
+            android:paddingBottom="@dimen/guideline_margin"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/share" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="@dimen/image_post_author"
+        android:layout_height="@dimen/image_post_author"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/guideline_margin"
+        android:layout_marginEnd="@dimen/guideline_margin"
+        android:layout_marginRight="@dimen/guideline_margin"
+        android:adjustViewBounds="true"
+        android:background="@color/light_gray_100"
+        android:contentDescription="@string/image"
+        android:scaleType="centerCrop" />
+
+</RelativeLayout>
+
+<!--<ImageView
                     android:id="@+id/bookmark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -115,25 +156,4 @@
                     android:paddingBottom="@dimen/guideline_margin"
                     android:scaleType="centerCrop"
                     android:visibility="invisible"
-                    app:srcCompat="@drawable/share" />
-
-            </RelativeLayout>
-
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="@dimen/image_post_author"
-                android:layout_height="@dimen/image_post_author"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="@dimen/guideline_margin"
-                android:layout_marginEnd="@dimen/guideline_margin"
-                android:layout_marginRight="@dimen/guideline_margin"
-                android:adjustViewBounds="true"
-                android:background="@color/light_gray_100"
-                android:contentDescription="@string/image"
-                android:scaleType="centerCrop" />
-
-        </RelativeLayout>
-    </androidx.cardview.widget.CardView>
-
-</FrameLayout>
+                    app:srcCompat="@drawable/share" />-->

@@ -22,7 +22,7 @@ import com.piestack.adventelegraph.models.event.ChapterEvent
 import com.piestack.adventelegraph.models.event.NewPageEvent
 import com.piestack.adventelegraph.models.event.VerseEvent
 import com.piestack.adventelegraph.models.room.Book
-import com.piestack.adventelegraph.models.room.kjv
+import com.piestack.adventelegraph.models.room.Kjv
 import com.piestack.adventelegraph.repository.LocalRepository
 import com.piestack.adventelegraph.ui.base.RxViewModel
 import com.piestack.adventelegraph.util.RxBus
@@ -32,12 +32,12 @@ import javax.inject.Inject
 
 class BibleActivityViewModel @Inject constructor(private val localRepository: LocalRepository, private val schedulerProvider: SchedulerProvider) : RxViewModel() {
 
-    var allVersesResult = MutableLiveData<ArrayList<kjv>>()
-    var getVerseResult = MutableLiveData<kjv>()
-    var getChapterResult = MutableLiveData<ArrayList<kjv>>()
-    var getRangeResult = MutableLiveData<ArrayList<kjv>>()
+    private var allVersesResult = MutableLiveData<ArrayList<Kjv>>()
+    private var getVerseResult = MutableLiveData<Kjv>()
+    var getChapterResult = MutableLiveData<ArrayList<Kjv>>()
+    private var getRangeResult = MutableLiveData<ArrayList<Kjv>>()
     var getNoOfChaptersResult = MutableLiveData<Int>()
-    var getNoOfVersesResult = MutableLiveData<Int>()
+    private var getNoOfVersesResult = MutableLiveData<Int>()
     var getBooksResult = MutableLiveData<ArrayList<Book>>()
 
     var newPage = MutableLiveData<NewPageEvent>()
@@ -109,7 +109,7 @@ class BibleActivityViewModel @Inject constructor(private val localRepository: Lo
         disposables.add(disposable)
     }
 
-    fun insertBible(bible: ArrayList<kjv>) {
+    fun insertBible(bible: ArrayList<Kjv>) {
         localRepository.insertBible(bible)
     }
 

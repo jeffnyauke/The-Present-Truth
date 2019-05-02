@@ -46,6 +46,7 @@ class BibleFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+
     private lateinit var viewModel: BibleActivityViewModel
 
     private lateinit var bibleAdapter: BibleAdapter

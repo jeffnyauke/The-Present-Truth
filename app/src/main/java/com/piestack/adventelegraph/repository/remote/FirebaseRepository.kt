@@ -17,13 +17,11 @@
 package com.piestack.adventelegraph.repository.remote
 
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.QuerySnapshot
-import com.piestack.adventelegraph.models.Filters
-import io.reactivex.Observable
+import com.google.firebase.firestore.Query
+import com.piestack.adventelegraph.models.filters.Articles
 
 interface FirebaseRepository {
 
-    fun listPosts(filters: Filters): Observable<QuerySnapshot>
+    fun applyFilters(query: Query, articleFilter: Articles, documentSnapshot: DocumentSnapshot?): Query
 
-    fun listPosts(filters: Filters, documentSnapshot: DocumentSnapshot): Observable<QuerySnapshot>
 }

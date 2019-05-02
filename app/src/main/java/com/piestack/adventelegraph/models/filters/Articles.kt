@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018. Jeffrey Nyauke.
+ * Copyright (c) 2019. Jeffrey Nyauke.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-package com.piestack.adventelegraph.models
+package com.piestack.adventelegraph.models.filters
+
+import com.piestack.adventelegraph.app.Config
 
 /**
  * Created by Jeffrey Nyauke on 7/19/2018.
  * Piestack.
  */
-data class Filters(var author: String = "", var category: String = "", var primary: Boolean = true, var published: Boolean = true, var sort: String = "published_date", var limit: Long = 10)
+data class Articles(var author: String = "", var category: String = "", var primary: Boolean = true, var published: Boolean = true, var sort: String = "published_date", var limit: Long = Config.FETCH_LIMIT.toLong())

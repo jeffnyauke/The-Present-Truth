@@ -22,13 +22,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.piestack.adventelegraph.R
-import com.piestack.adventelegraph.models.room.kjv
+import com.piestack.adventelegraph.models.room.Kjv
 
 /**
  * Created by Jeffrey Nyauke on 12/17/2017.
  * Piestack.
  */
-class BibleAdapter(private val verses: ArrayList<kjv>) : RecyclerView.Adapter<BibleAdapter.ViewHolder>() {
+class BibleAdapter(private val verses: ArrayList<Kjv>) : RecyclerView.Adapter<BibleAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.list_verse_item, parent, false)
         return ViewHolder(v)
@@ -42,14 +42,14 @@ class BibleAdapter(private val verses: ArrayList<kjv>) : RecyclerView.Adapter<Bi
         return verses.size
     }
 
-    fun refill(list: ArrayList<kjv>) {
+    fun refill(list: ArrayList<Kjv>) {
         verses.clear()
         verses.addAll(list)
         notifyDataSetChanged()
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindItems(kjv: kjv) {
+        fun bindItems(kjv: Kjv) {
             val textViewVerse = itemView.findViewById<TextView>(R.id.verse)
             textViewVerse.text = "${kjv.v}  ${kjv.t}"
         }

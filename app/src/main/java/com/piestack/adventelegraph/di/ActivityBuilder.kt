@@ -25,6 +25,7 @@ import com.piestack.adventelegraph.ui.bible.fragment.BibleFragment
 import com.piestack.adventelegraph.ui.hymnal.Hymnal
 import com.piestack.adventelegraph.ui.main.MainActivity
 import com.piestack.adventelegraph.ui.main.fragments.*
+import com.piestack.adventelegraph.ui.search.SearchActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -33,6 +34,9 @@ internal abstract class ActivityBuilder {
 
     @ContributesAndroidInjector
     abstract fun bindHomeActivity(): MainActivity
+
+    @ContributesAndroidInjector
+    abstract fun bindSearchActivity(): SearchActivity
 
     @ContributesAndroidInjector
     abstract fun bindBibleActivity(): Bible
@@ -56,16 +60,19 @@ internal abstract class ActivityBuilder {
     abstract fun bindBibleTabFragmentVerse(): FragmentVerse
 
     @ContributesAndroidInjector
-    abstract fun bindNavigationFragment(): BooksFragment
+    abstract fun bindLibraryFragment(): LibraryFragment
 
     @ContributesAndroidInjector
     abstract fun bindHomeFragment(): HomeFragment
 
     @ContributesAndroidInjector
-    abstract fun bindMusicFragment(): MusicFragment
+    abstract fun bindAudioFragment(): AudioFragment
 
     @ContributesAndroidInjector
-    abstract fun bindProphecyFragment(): ProphecyFragment
+    abstract fun bindHealthFragment(): HealthFragment
+
+    @ContributesAndroidInjector
+    abstract fun bindPoemsFragment(): PoemsFragment
 
     @ContributesAndroidInjector
     abstract fun bindVideoFragment(): VideoFragment

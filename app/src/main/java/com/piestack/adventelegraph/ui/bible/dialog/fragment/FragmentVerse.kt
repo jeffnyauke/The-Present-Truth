@@ -71,13 +71,13 @@ class FragmentVerse : Fragment() {
                     RxBus.getInstance().send(VerseEvent(position, chapter, book))
                 }
 
-        viewModel.clickedChapter.observe(this, Observer {
+        viewModel.clickedChapter.observe(this, Observer { it ->
             it?.let { chapterEvent ->
                 book = chapterEvent.book
                 chapter = chapterEvent.position
                 Timber.e("Updating dialog fragment verses to chapter: $chapter $book")
                 viewModel.getNoOfVerses(chapter + 1, book + 1)
-                viewModel.getNoOfChaptersResult.observe(this, Observer {
+                viewModel.getNoOfChaptersResult.observe(this, Observer { it ->
                     it?.let { chapterVerses ->
                         mAdapter.apply {
                             refillAdapter(chapterVerses)

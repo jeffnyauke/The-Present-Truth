@@ -40,7 +40,7 @@ import javax.inject.Inject
 class TabbedDialog : DialogFragment() {
 
     private lateinit var tabLayout: TabLayout
-    lateinit var viewPager: ViewPager
+    private lateinit var viewPager: ViewPager
     private var bookname: String = ""
     private var chapter: Int = 0
     private var verse: Int = 0
@@ -55,7 +55,7 @@ class TabbedDialog : DialogFragment() {
                               savedInstanceState: Bundle?): View? {
         val rootview = activity?.layoutInflater?.inflate(R.layout.dialog_bible, container, false)
 
-        this.setStyle(androidx.fragment.app.DialogFragment.STYLE_NO_INPUT, R.style.Theme_Advent_Dialog)
+        this.setStyle(STYLE_NO_INPUT, R.style.Theme_Advent_Dialog)
 
         tabLayout = rootview?.findViewById<View>(R.id.tabLayout) as TabLayout
         viewPager = rootview.findViewById<View>(R.id.masterViewPager) as ViewPager
@@ -98,14 +98,14 @@ class TabbedDialog : DialogFragment() {
             it?.let { bookEvent ->
                 bookname = bookEvent.name
                 viewPager.setCurrentItem(1, true)
-                dialog.setTitle(bookname)
+                dialog?.setTitle(bookname)
             }
         })
 
         viewModel.clickedChapter.observe(this, Observer {
             it?.let { chapterEvent ->
                 chapter = chapterEvent.position
-                dialog.setTitle("$bookname ${chapter + 1}")
+                dialog?.setTitle("$bookname ${chapter + 1}")
                 viewPager.setCurrentItem(2, true)
             }
         })
@@ -113,8 +113,8 @@ class TabbedDialog : DialogFragment() {
         viewModel.clickedVerse.observe(this, Observer {
             it?.let { verseEvent ->
                 verse = verseEvent.position
-                dialog.setTitle("$bookname ${chapter + 1} ${verse + 1}")
-                this.dialog.dismiss()
+                dialog?.setTitle("$bookname ${chapter + 1} ${verse + 1}")
+                this.dialog?.dismiss()
             }
         })
     }

@@ -21,6 +21,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.piestack.adventelegraph.ui.bible.BibleActivityViewModel
 import com.piestack.adventelegraph.ui.hymnal.HymnalActivityViewModel
 import com.piestack.adventelegraph.ui.main.MainActivityViewModel
+import com.piestack.adventelegraph.ui.main.fragments.*
+import com.piestack.adventelegraph.ui.search.SearchActivityViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -40,8 +42,44 @@ internal abstract class ViewModelBuilder {
 
     @Binds
     @IntoMap
+    @ViewModelKey(SearchActivityViewModel::class)
+    internal abstract fun bindSearchViewModel(searchActivityViewModel: SearchActivityViewModel): ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(HymnalActivityViewModel::class)
     internal abstract fun bindHymnalViewModel(hymnalActivityViewModel: HymnalActivityViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AudioFragmentViewModel::class)
+    internal abstract fun bindAudioFragmentViewModel(audioFragmentViewModel: AudioFragmentViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(HealthFragmentViewModel::class)
+    internal abstract fun bindHealthFragmentViewModel(healthFragmentViewModel: HealthFragmentViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(HomeFragmentViewModel::class)
+    internal abstract fun bindHomeFragmentViewModel(homeFragmentViewModel: HomeFragmentViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LibraryFragmentViewModel::class)
+    internal abstract fun bindLibraryFragmentViewModel(libraryFragmentViewModel: LibraryFragmentViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PoemsFragmentViewModel::class)
+    internal abstract fun bindPoemsFragmentViewModel(poemsFragmentViewModel: PoemsFragmentViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(VideoFragmentViewModel::class)
+    internal abstract fun bindVideoFragmentViewModel(videoFragmentViewModel: VideoFragmentViewModel): ViewModel
+
 
     @Binds
     internal abstract fun bindViewModelFractory(factory: ViewModelFactory): ViewModelProvider.Factory

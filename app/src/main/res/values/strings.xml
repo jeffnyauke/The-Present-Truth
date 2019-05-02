@@ -186,5 +186,10 @@
     </array>
     <string name="title_hymnal">Adventist Hymnal</string>
     <string name="title_bible">Bible</string>
+    <string name="no_saves">no saves</string>
+    <string name="comments">Comments</string>
+    <string name="search">Search</string>
+    <string name="blank" />
+    <string name="setting_up">Just a few seconds. We are setting up..</string>
 
 </resources>

@@ -16,59 +16,33 @@
 
 package com.piestack.adventelegraph.ui.main
 
-import androidx.lifecycle.MutableLiveData
-import com.google.firebase.firestore.DocumentSnapshot
-import com.piestack.adventelegraph.models.Filters
-import com.piestack.adventelegraph.models.Post
-import com.piestack.adventelegraph.repository.remote.FirebaseRepository
-import com.piestack.adventelegraph.ui.base.RxViewModel
-import com.piestack.adventelegraph.util.SchedulerProvider
-import timber.log.Timber
+import com.piestack.adventelegraph.util.prefs.Prefs
+import com.piestack.adventelegraph.ui.base.ScopedViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class MainActivityViewModel @Inject constructor(private val firebaseRepository: FirebaseRepository, private val schedulerProvider: SchedulerProvider) : RxViewModel() {
 
-    var posts = MutableLiveData<ArrayList<Post>>()
-    var lastVisible: DocumentSnapshot? = null
-    var size = 0
-    val listPost: ArrayList<Post> = ArrayList()
+class MainActivityViewModel @Inject constructor(private val prefs: Prefs) : ScopedViewModel() {
 
-    override fun subscribe() {
-    }
+    fun checkFirstStart() {
+        launch {
+            withContext(Dispatchers.Main) {
+                val isFirstStart = prefs.isFirstStart()
 
-    fun filterPosts(filters: Filters) {
-        val disposable = if (lastVisible == null) {
-            firebaseRepository.listPosts(filters)
-                    .compose(schedulerProvider.getSchedulersForObservable()).subscribe({
-                        listPost.clear()
-                        for (document in it) {
-                            Timber.e("Current posts: ${document.data}")
-                            val post = document.toObject(Post::class.java)
-                            listPost.apply {
-                                add(post)
-                            }
-                            lastVisible = it.documents[it.size() - 1]
-                            size = it.size()
-                        }
-                        posts.value = listPost
-                    }, {
-                        Timber.e(it, it.message)
-                    })
-        } else {
-            firebaseRepository.listPosts(filters, lastVisible!!)
-                    .compose(schedulerProvider.getSchedulersForObservable()).subscribe({
-                        for (document in it) {
-                            Timber.e("Current posts: ${document.data}")
-                            val post = document.toObject(Post::class.java)
-                            listPost.apply { add(post) }
-                            lastVisible = it.documents[it.size() - 1]
-                            size = it.size()
-                        }
-                        posts.value = listPost
-                    }, {
-                        Timber.e(it, it.message)
-                    })
+                //if the activity has never started before
+                if (isFirstStart) {
+
+                    //Launch app intro
+                    /*val i = Intent(this@MainActivity, IntroActivity::class.java)
+                    startActivity(i)*/
+
+                    //Make a new preference editor
+                    prefs.setFirstStart(false)
+                }
+            }
         }
-        disposables.add(disposable)
     }
+
 }

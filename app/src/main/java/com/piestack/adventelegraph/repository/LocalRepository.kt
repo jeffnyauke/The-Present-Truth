@@ -17,24 +17,24 @@
 package com.piestack.adventelegraph.repository
 
 import com.piestack.adventelegraph.models.room.Book
-import com.piestack.adventelegraph.models.room.kjv
+import com.piestack.adventelegraph.models.room.Kjv
 import io.reactivex.Flowable
 
 interface LocalRepository {
 
-    val allVerses: Flowable<ArrayList<kjv>>
+    val allVerses: Flowable<ArrayList<Kjv>>
 
-    fun getVerse(id: Int): Flowable<kjv>
+    fun getVerse(id: Int): Flowable<Kjv>
 
-    fun getChapter(chapter: Int, book: Int): Flowable<ArrayList<kjv>>
+    fun getChapter(chapter: Int, book: Int): Flowable<ArrayList<Kjv>>
 
-    fun getRange(start: Int, end: Int): Flowable<ArrayList<kjv>>
+    fun getRange(start: Int, end: Int): Flowable<ArrayList<Kjv>>
 
     fun getNoOfChapters(book: Int): Flowable<Int>
 
     fun getNoOfVerses(chapter: Int, book: Int): Flowable<Int>
 
-    fun insertBible(bible: ArrayList<kjv>)
+    fun insertBible(bible: ArrayList<Kjv>)
 
     fun deleteBible()
 

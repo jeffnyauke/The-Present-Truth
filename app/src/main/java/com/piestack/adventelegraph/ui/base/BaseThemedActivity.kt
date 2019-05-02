@@ -20,7 +20,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import com.tinashe.christInSong.utils.prefs.Prefs
+import com.piestack.adventelegraph.util.prefs.Prefs
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -33,7 +33,7 @@ abstract class BaseThemedActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
 
-        delegate.setLocalNightMode(if (prefs.isNightMode()) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO)
+        delegate.localNightMode = if (prefs.isNightMode()) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

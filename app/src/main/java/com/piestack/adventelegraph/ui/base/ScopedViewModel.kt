@@ -14,15 +14,23 @@
  * limitations under the License.
  */
 
-package com.piestack.adventelegraph.ui.hymnal
+package com.piestack.adventelegraph.ui.base
 
-import com.piestack.adventelegraph.ui.base.RxViewModel
-import com.piestack.adventelegraph.util.SchedulerProvider
-import javax.inject.Inject
+import androidx.lifecycle.ViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlin.coroutines.CoroutineContext
 
-class HymnalActivityViewModel @Inject constructor(private val schedulerProvider: SchedulerProvider) : RxViewModel() {
-    override fun subscribe() {
+
+open class ScopedViewModel : ViewModel(), CoroutineScope {
+    private val job = Job()
+
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Default
+
+    override fun onCleared() {
+        super.onCleared()
+        job.cancel()
     }
-    /*fun showDataFromApi(): Single<IpAddress> = repository.getDataFromApi()
-            .compose(schedulerProvider.getSchedulersForSingle())*/
 }

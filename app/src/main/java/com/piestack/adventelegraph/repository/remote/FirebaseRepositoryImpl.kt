@@ -17,131 +17,55 @@
 package com.piestack.adventelegraph.repository.remote
 
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
-import com.piestack.adventelegraph.models.Filters
-import io.reactivex.Observable
+import com.piestack.adventelegraph.models.filters.Articles
 import timber.log.Timber
 
 
-class FirebaseRepositoryImpl constructor(private val fireStore: FirebaseFirestore) : FirebaseRepository {
+class FirebaseRepositoryImpl : FirebaseRepository {
 
-    override fun listPosts(filters: Filters): Observable<QuerySnapshot> {
+    override fun applyFilters(query: Query, articleFilter: Articles, documentSnapshot: DocumentSnapshot?): Query {
+        var filteredQuery = query
 
-        return Observable.create { emitter ->
-            var query: Query = fireStore.collection(ARTICLES)
+        if (articleFilter.author.isNotBlank()) {
+            filteredQuery = filteredQuery.whereEqualTo("uid", articleFilter.author)
+        }
 
-            if (filters.author.isNotBlank()) {
-                query = query.whereEqualTo("uid", filters.author)
-            }
+        if (articleFilter.category.isNotBlank()) {
+            filteredQuery = filteredQuery.whereEqualTo("category", articleFilter.category)
+        }
 
-            if (filters.category.isNotBlank()) {
-                query = query.whereEqualTo("category", filters.category)
-            }
+        filteredQuery = if (articleFilter.primary) {
+            filteredQuery.whereEqualTo("primary", true)
+        } else {
+            filteredQuery.whereEqualTo("primary", false)
+        }
 
-            query = if (filters.primary) {
-                query.whereEqualTo("primary", true)
-            } else {
-                query.whereEqualTo("primary", false)
-            }
+        filteredQuery = if (articleFilter.published) {
+            filteredQuery.whereEqualTo("published", true)
+        } else {
+            filteredQuery.whereEqualTo("published", false)
+        }
 
-            query = if (filters.published) {
-                query.whereEqualTo("published", true)
-            } else {
-                query.whereEqualTo("published", false)
-            }
-
-            query = when {
-                filters.sort == "published_date" -> query.orderBy("published_date", Query.Direction.DESCENDING)
-                filters.sort == "date_created" -> query.orderBy("date_created", Query.Direction.DESCENDING)
-                filters.sort == "views" -> query.orderBy("metrics.views", Query.Direction.DESCENDING)
-                filters.sort == "likes" -> query.orderBy("metrics.likes", Query.Direction.DESCENDING)
-                filters.sort == "shares" -> query.orderBy("metrics.shares", Query.Direction.DESCENDING)
-                else -> {
-                    query.orderBy("published_date", Query.Direction.DESCENDING)
-                }
-            }
-
-            //if (lastVisible != null) query.startAfter(lastVisible!!)
-
-            query = query.limit(filters.limit)
-
-            Timber.e(filters.toString())
-
-            query.addSnapshotListener { querySnapshot, e ->
-                if (e != null) {
-                    Timber.w(e, e.message)
-                    emitter.onError(e)
-                    return@addSnapshotListener
-                }
-                if (querySnapshot != null && !querySnapshot.isEmpty) {
-                    emitter.onNext(querySnapshot)
-                } else {
-                    Timber.e("Current posts: null")
-                }
+        filteredQuery = when {
+            articleFilter.sort == "published_date" -> filteredQuery.orderBy("published_date", Query.Direction.DESCENDING)
+            articleFilter.sort == "date_created" -> filteredQuery.orderBy("date_created", Query.Direction.DESCENDING)
+            articleFilter.sort == "views" -> filteredQuery.orderBy("metrics.views", Query.Direction.DESCENDING)
+            articleFilter.sort == "likes" -> filteredQuery.orderBy("metrics.likes", Query.Direction.DESCENDING)
+            articleFilter.sort == "shares" -> filteredQuery.orderBy("metrics.shares", Query.Direction.DESCENDING)
+            else -> {
+                filteredQuery.orderBy("published_date", Query.Direction.DESCENDING)
             }
         }
-    }
 
-    override fun listPosts(filters: Filters, documentSnapshot: DocumentSnapshot): Observable<QuerySnapshot> {
-
-        return Observable.create { emitter ->
-            var query: Query = fireStore.collection(ARTICLES)
-
-            if (filters.author.isNotBlank()) {
-                query = query.whereEqualTo("uid", filters.author)
-            }
-
-            if (filters.category.isNotBlank()) {
-                query = query.whereEqualTo("category", filters.category)
-            }
-
-            query = if (filters.primary) {
-                query.whereEqualTo("primary", true)
-            } else {
-                query.whereEqualTo("primary", false)
-            }
-
-            query = if (filters.published) {
-                query.whereEqualTo("published", true)
-            } else {
-                query.whereEqualTo("published", false)
-            }
-
-            query = when {
-                filters.sort == "published_date" -> query.orderBy("published_date", Query.Direction.DESCENDING)
-                filters.sort == "date_created" -> query.orderBy("date_created", Query.Direction.DESCENDING)
-                filters.sort == "views" -> query.orderBy("metrics.views", Query.Direction.DESCENDING)
-                filters.sort == "likes" -> query.orderBy("metrics.likes", Query.Direction.DESCENDING)
-                filters.sort == "shares" -> query.orderBy("metrics.shares", Query.Direction.DESCENDING)
-                else -> {
-                    query.orderBy("published_date", Query.Direction.DESCENDING)
-                }
-            }
-
-            query.startAfter(documentSnapshot)
-
-            query = query.limit(filters.limit)
-
-            Timber.e(filters.toString())
-
-            query.addSnapshotListener { querySnapshot, e ->
-                if (e != null) {
-                    Timber.w(e, e.message)
-                    emitter.onError(e)
-                    return@addSnapshotListener
-                }
-                if (querySnapshot != null && !querySnapshot.isEmpty) {
-                    emitter.onNext(querySnapshot)
-                } else {
-                    Timber.e("Current posts: null")
-                }
-            }
+        if (documentSnapshot != null) {
+            filteredQuery.startAfter(documentSnapshot)
         }
-    }
 
-    companion object {
-        val ARTICLES = "articles"
+        filteredQuery = filteredQuery.limit(articleFilter.limit)
+
+        Timber.e(articleFilter.toString())
+
+        return filteredQuery
     }
 }
